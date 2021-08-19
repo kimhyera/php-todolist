@@ -2,9 +2,11 @@
 
 include 'config.php';
 
-$task = $_POST['task'];
+$title = $_POST['title'];
+$completed = $_POST['completed'];
+$sql = "INSERT INTO tasks (title, completed) VALUES ('$title','$completed')";
 
-$sql = "INSERT INTO tasks (title) VALUES ('$task')";
+
 $result = mysqli_query($conn, $sql);
 
 if ($result) {
