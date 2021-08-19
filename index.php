@@ -33,16 +33,16 @@
         url: 'show-tasks.php',
         type: 'post',
         success: function(result) {
-          $("#tasks").html(result);
-        }
+          $('#tasks').html(result);
+        },
       });
     }
     showData();
     // Add Task
 
-    $("#addBtn").on("click", function(e) {
+    $('#addBtn').on('click', function(e) {
       e.preventDefault();
-      var title = $("#taskValue").val();
+      var title = $('#taskValue').val();
 
       console.log(title);
 
@@ -51,40 +51,35 @@
         type: 'post',
         data: {
           title: title,
-          completed: 0
+          completed: 0,
         },
         success: function(result) {
           showData();
           if (result == 1) {
-            $("#taskValue").val('');
-            alert("Todo List Added Successfully.");
-
+            $('#taskValue').val('');
+            alert('Todo List Added Successfully.');
           } else {
             console.log(result);
           }
-        }
+        },
       });
     });
 
-
     // Remove Task
-
-
-    $(document).on("click", "#removeBtn", function() {
-      id = $(this).data("id");
-      element = $(this);
+    $(document).on('click', '#removeBtn', function(e) {
+      e.preventDefault();
+      var id = $(this).data('id');
 
       $.ajax({
         url: 'remove-task.php',
-        type: 'post',
-        data: {
-          id: id
-        },
-        success: function(result) {
-          if (result == 1) {
-            showData();
+        type: 'POST',
+
+        success: function(data) {
+          loadTasks();
+          if (data == 0) {
+            alert('Something wrong went. Please try again.');
           }
-        }
+        },
       });
     });
   });

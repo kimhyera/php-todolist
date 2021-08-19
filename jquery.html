@@ -10,6 +10,7 @@
 
 		<title>Todo List App - Pure Coding</title>
 	</head>
+
 	<body>
 		<div class="wrapper">
 			<h2 class="title">Todo List App</h2>
@@ -26,33 +27,38 @@
 		<script>
 			$(document).ready(function () {
 				// Show Tasks
-				function loadTasks() {
+				function showData() {
 					$.ajax({
 						url: 'show-tasks.php',
-						type: 'POST',
-						success: function (data) {
-							$('#tasks').html(data);
+						type: 'post',
+						success: function (result) {
+							$('#tasks').html(result);
 						},
 					});
 				}
-
-				loadTasks();
-
+				showData();
 				// Add Task
+
 				$('#addBtn').on('click', function (e) {
 					e.preventDefault();
+					var title = $('#taskValue').val();
 
-					var task = $('#taskValue').val();
+					console.log(title);
 
 					$.ajax({
-						url: 'add-task.php',
-						type: 'POST',
-						data: { task: task },
-						success: function (data) {
-							loadTasks();
-							$('#taskValue').val('');
-							if (data == 0) {
-								alert('Something wrong went. Please try again.');
+						url: 'add-tasks.php',
+						type: 'post',
+						data: {
+							title: title,
+							completed: false,
+						},
+						success: function (result) {
+							showData();
+							if (result == 1) {
+								$('#taskValue').val('');
+								alert('Todo List Added Successfully.');
+							} else {
+								console.log(result);
 							}
 						},
 					});
@@ -66,8 +72,7 @@
 					$.ajax({
 						url: 'remove-task.php',
 						type: 'POST',
-            
-            
+
 						success: function (data) {
 							loadTasks();
 							if (data == 0) {

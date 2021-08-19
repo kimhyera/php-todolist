@@ -9,8 +9,7 @@
 ?>
 
 <li>
-  <p><?php echo $row['completed']; ?></p>
-  <p><?php echo $row['title']; ?></p> <button id="removeBtn" data-id="<?php echo $row['id']; ?>"><i
+  <p><?php echo $row['title']; ?></p> <button id="delete" data-id="<?php echo $row['id']; ?>"><i
       class="fa fa-trash"></i></button>
 </li>
 
