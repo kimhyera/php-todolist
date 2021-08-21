@@ -2,16 +2,17 @@
   include 'config.php';
 
   $sql = "SELECT * FROM tasks";
-  $result = mysqli_query($conn, $sql);
 
-  if (mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
+ $result = $conn ->query($sql);
+
+ if ($result -> num_rows > 0){
+   $data = array();
+   while($row = $result -> fetch_assoc()){
+     $data[] = $row;
+   }
+ }
+
+
+ echo json_encode($data)
+
 ?>
-
-<li>
-  <p><?php echo $row['completed']; ?></p>
-  <p><?php echo $row['title']; ?></p> <button id="removeBtn" data-id="<?php echo $row['id']; ?>"><i
-      class="fa fa-trash"></i></button>
-</li>
-
-<?php } }else { echo "<div style='text-align:center;'>Hooray, no task here.</div>"; } ?>
